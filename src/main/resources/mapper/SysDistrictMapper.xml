@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.david.mapper.SysDistrictMapper">
+
+    <resultMap id="BaseResultMap" type="com.david.domain.SysDistrict">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="parentId" column="parent_id" jdbcType="OTHER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="zipcode" column="zipcode" jdbcType="OTHER"/>
+            <result property="pinyin" column="pinyin" jdbcType="VARCHAR"/>
+            <result property="lng" column="lng" jdbcType="VARCHAR"/>
+            <result property="lat" column="lat" jdbcType="VARCHAR"/>
+            <result property="level" column="level" jdbcType="TINYINT"/>
+            <result property="sort" column="sort" jdbcType="TINYINT"/>
+            <result property="location" column="location" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,parent_id,name,
+        zipcode,pinyin,lng,
+        lat,level,sort,
+        location
+    </sql>
+</mapper>
