@@ -87,6 +87,12 @@ public class EsDocController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    /**
+     * 查询分页
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/search")
     public ResponseEntity<EsResponseBody> search(@RequestBody EsSearchRequest request) throws IOException {
         // 构造查询过滤条件
@@ -124,6 +130,13 @@ public class EsDocController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    /**
+     * 数据分析统计
+     * 统计请求的类来源和平台
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/aggs")
     public ResponseEntity<EsResponseBody> aggs(@RequestBody EsSearchRequest request) throws IOException {
 
@@ -139,15 +152,15 @@ public class EsDocController {
                 .from(0)
                 .size(1)
                 .query(query)
-                .aggregations("cityName_bucket",
-                        // 一级聚合
-                        a -> a.terms(t -> t.field("cityName").size(10))
-                                // 二级聚合
+                .aggregations("provinceName_bucket",
+                        // 一级聚合，每个省份的流量数据，size控制返回数量
+                        a -> a.terms(t -> t.field("provinceName").size(30))
+                                // 二级聚合，不同省份下多个维度的指标聚合数据，如手机品牌、来源平台、网络类型、sdk版本等
                                 .aggregations("bizType_bucket", aa -> aa.terms(ts -> ts.field("bizType").size(10)))
                                 .aggregations("network_bucket", aa -> aa.terms(ts -> ts.field("network").size(10)))
                                 .aggregations("sdkVersion_bucket", aa -> aa.terms(t3 -> t3.field("sdkVersion").size(10)))
                                 .aggregations("platformName_bucket", aa -> aa.terms(t4 -> t4.field("platformName").size(10)))
-                                .aggregations("phoneBrandName_bucket", aa -> aa.terms(t5 -> t5.field("phoneBrandName").size(10)))
+                                .aggregations("phoneBrandName_bucket", aa -> aa.terms(t5 -> t5.field("phoneBrandName").size(20)))
                                 // 带条件二级聚合
                                 .aggregations("ecpmAvg_bucket", aa -> aa.filter(f6 -> f6.term(c -> c.field("bizType").value(2))).aggregations("ecpmAvg_bucket", ss -> ss.avg(avg -> avg.field("ecpm"))))
                 )

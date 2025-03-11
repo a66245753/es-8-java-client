@@ -50,7 +50,8 @@ public class EsDocSyncController implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        district();
+        // 同步省市区经纬度数据
+//        district();
     }
     /**
      * https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/indexing-bulk.html
@@ -65,7 +66,7 @@ public class EsDocSyncController implements ApplicationRunner {
         long id = 0;
         while (true) {
             List<SysDistrict> list = sysDistrictService.lambdaQuery()
-                    .gt(SysDistrict::getId, id).last("limit 2000").list();
+                    .gt(SysDistrict::getId, id).orderByAsc(SysDistrict::getId).last("limit 2000").list();
 
             if (list.isEmpty()) {
                 break;
@@ -99,7 +100,7 @@ public class EsDocSyncController implements ApplicationRunner {
         try {
             elasticsearchClient.bulk(br.build());
         } catch (ElasticsearchException e) {
-            System.out.println(e);
+            System.out.println("ElasticsearchException: " +e);
         }
     }
 
