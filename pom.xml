@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.david</groupId>
-    <artifactId>es8-java-client</artifactId>
+    <artifactId>es-8-java-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>es8-java-client</name>
-    <description>es8-java-client</description>
+    <name>es-8-java-client</name>
+    <description>es-8-java-client</description>
     <url/>
     <licenses>
         <license/>
